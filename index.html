@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WANG WANG CORP</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+</head>
+<tbody>
+    <h1>WANG WANG CORP DATA:</h1>
+    <table id="data-table"  >
+        <thead>
+            <tr>
+			    <th style="border: 1px solid;" > 時間 </th>
+                <th style="border: 1px solid;"> UID </th>
+                <th style="border: 1px solid;"> 許可 </th>
+				<th style="border: 1px solid;"> 照片 </th>
+                <div id="message"></div>
+                <input type="text" id="input-message">
+                <button id="sendButton" onclick="startCountdownAndSend()">輸入密碼開門</button>
+				<span id="countdown"></span>
+				<span id="msg1"></span>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</tbody>
+<body>
+    <div id="topic1-data"></div>
+    <div id="topic2-data"></div>
+    <script>
+	    var countdownInterval;
+		var data1;
+        var countdownTime = 5; // 倒计时时间，单位：秒
+        var mqttBroker = "broker.emqx.io";
+        var mqttPort = 8083;
+        var mqttTopic = "WangWangPi/MqttButton";  //傳送訊息
+		var mqttTopic1 = "WangWangPi/Code";  //接收輸入密碼後回傳的true or false
+        var mqttTopic2 = "WangWangPi/Data";  //接收資料
+        // 创建 MQTT 客户端实例
+        var client = new Paho.MQTT.Client(mqttBroker, mqttPort,  "client-" + Math.round(Math.random(100000000, 1000000000)*1000000000));
+        //"clientId"
+        // 设置连接和消息接收的回调函数
+        client.onConnectionLost = onConnectionLost;
+        client.onMessageArrived = onMessageArrived;
+
+        // 连接到 MQTT 代理
+        client.connect({ onSuccess: onConnect });
+		
+		function onConnect() {
+            console.log("Connected to MQTT broker");
+            // 订阅 MQTT 主题
+			client.subscribe(mqttTopic1);
+            client.subscribe(mqttTopic2);
+		}
+		
+        // MQTT 连接成功处理函数
+		function onConnectionLost(responseObject) {
+            if (responseObject.errorCode !== 0) {
+                console.log("Connection lost: " + responseObject.errorMessage);
+            }
+        }
+
+        // MQTT 接收消息处理函数
+		function onMessageArrived(message) {
+		   var topic = message.destinationName;
+           var payload = message.payloadString;
+		   if (topic === mqttTopic1) {
+		       var data = message.payloadString;
+			   data1 = data;
+			   var countdownElement = document.getElementById("countdown");
+		       var msg1Element = document.getElementById("msg1");
+               var sendButton = document.getElementById("sendButton");
+			   if (data1 == "True") {   
+		           sendButton.disabled = true; // 禁用发送按钮
+			       msg1Element.innerText = "輸入正確";
+                   var countdownInterval = setInterval(function() {
+                       countdownElement.innerText = countdownTime;
+                       countdownTime--;
+			           if (countdownTime < 0) { 
+                           clearInterval(countdownInterval);
+                           countdownElement.innerText = "";
+                           countdownTime = 5; // 重置倒计时时间
+                           countdownInterval = null;
+				           data1 = null;
+                           sendButton.disabled = false; // 启用发送按钮
+			            }
+		            }, 1000);
+                }
+			    else if(data1 == "False") 
+			        msg1Element.innerText = "輸入錯誤";
+		    }
+		   if (topic === mqttTopic2) {
+			           var data = JSON.parse(message.payloadString); //message.payloadString
+                       var id = data.id;
+                       var access = data.access;
+                       var photoData = data.photo;			   
+                       // 添加数据到表格
+                       var table = document.getElementById("data-table")
+                       var newRow = table.insertRow();
+        	           var timeCell = newRow.insertCell(0);
+                       var idCell = newRow.insertCell(1);
+                       var accessCell = newRow.insertCell(2);
+			           var photoCell = newRow.insertCell(3);
+			           timeCell.style.border = '1px solid';
+			           idCell.style.border = '1px solid';
+			           accessCell.style.border = '1px solid';
+			           timeCell.innerHTML = data.currentTime;
+                       idCell.innerText = id;
+                       accessCell.innerText = access;
+			           photoCell.innerHTML = '<img src="data:image/jpeg;base64,' + photoData + '" width="100" height="100">'; // 在单元格中显示照片
+			        }
+		        }///
+		    }///
+        }
+        function startCountdownAndSend() {
+		   var countdownElement = document.getElementById("countdown");
+		   var msg1Element = document.getElementById("msg1");
+           var sendButton = document.getElementById("sendButton");
+  
+           if (countdownInterval) {
+           // 如果已经在倒计时，则返回，防止重复点击发送数据
+           return;
+           }
+		   sendDataToMqtt();		
+	    }
+		
+        function sendDataToMqtt() {
+		   var message = document.getElementById("input-message").value;
+		   if (client.isConnected()) {
+               // 发布消息到另一个主题
+               var mqttMessage = new Paho.MQTT.Message(message);
+               mqttMessage.destinationName = mqttTopic;
+               client.send(mqttMessage);
+		    }
+			else {
+                console.log("MQTT client is not connected.");
+            }
+		}
+
+    </script>
+</body>
+
+</html>
