@@ -5,11 +5,11 @@
 </head>
 <body>
     <h1>Login</h1>
-    <form onsubmit="sendMessage(); return false;">
+    <form onsubmit="return false;">
         <label for="password">Password:</label>
         <input type="password" id="password" required>
         <br>
-        <input type="submit" value="Login">
+        <input type="button" value="Login" onclick="sendMessage()">
     </form>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
