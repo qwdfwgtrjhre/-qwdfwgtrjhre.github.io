@@ -16,7 +16,7 @@
         function sendMessage() {
             var password = document.getElementById("password").value;
             
-            // 使用 fetch API 發送 POST 請求到網站端的 /login 路徑
+            // 使用 fetch API 發送 POST 請求到後端 Flask app 的 /login 路徑
             fetch('/login', {
                 method: 'POST',
                 headers: {
@@ -28,12 +28,8 @@
             })
             .then(response => response.json())
             .then(data => {
-                // 根據網站端回傳的結果顯示訊息
-                if (data.message === "密碼正確") {
-                    alert("Login successful!");
-                } else {
-                    alert("Login failed. Invalid password!");
-                }
+                // 根據後端回傳的結果顯示訊息
+                alert(data.message);
             })
             .catch(error => {
                 console.error('Error:', error);
