@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js"></script>
+</head>
+<body>
+    <h1>Login</h1>
+    <form>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <input type="submit" value="Login" onclick="checkPassword()">
+    </form>
+    <p id="error" style="color: red;"></p>
+
+    <script>
+        // MQTT broker設定
+        var broker = "your_broker_ip";
+        var port = 9001;
+        var clientId = "web_client_" + parseInt(Math.random() * 100000);
+        var topic = "password/verification";
+
+        // 建立MQTT client
+        var client = new Paho.MQTT.Client(broker, port, clientId);
+
+        // MQTT連線設定
+        var options = {
+            useSSL: true,
+            onSuccess: onConnect,
+            onFailure: onFailure,
+        };
+
+        // 連線至MQTT broker
+        client.connect(options);
+
+        // 連線成功時的回調函式
+        function onConnect() {
+            console.log("Connected to MQTT broker");
+        }
+
+        // 連線失敗時的回調函式
+        function onFailure(message) {
+            console.log("Connection failed: " + message.errorMessage);
+        }
+
+        // 驗證密碼
+        function checkPassword() {
+            var password = document.getElementById("password").value;
+
+            // 傳送訊息至MQTT topic
+            var message = new Paho.MQTT.Message(password);
+            message.destinationName = topic;
+            client.send(message);
+
+            // 監聽MQTT回傳的訊息
+            client.subscribe(topic);
+            client.onMessageArrived = onMessageArrived;
+        }
+
+        // 收到MQTT訊息的回調函式
+        function onMessageArrived(message) {
+            var result = message.payloadString;
+            var errorElement = document.getElementById("error");
+
+            if (result === "true") {
+                errorElement.innerText = "";
+                // 密碼驗證通過，進行後續動作
+                // 例如跳轉到放資料的網頁
+                window.location.href = "https://username.github.io/data";
+            } else {
+                errorElement.innerText = "Invalid password";
+            }
+
+            // 取消訂閱MQTT topic
+            client.unsubscribe(topic);
+        }
+    </script>
+</body>
+</html>
