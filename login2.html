@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form onsubmit="return sendMessage()">
+        <label for="password">Password:</label>
+        <input type="password" id="password" required>
+        <br>
+        <input type="submit" value="Login">
+    </form>
+
+    <script>
+        function sendMessage() {
+            var password = document.getElementById("password").value;
+            
+            // 使用 fetch API 發送 POST 請求到網站端的 /login 路徑
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 根據網站端回傳的結果顯示訊息
+                if (data.message === "密碼正確") {
+                    alert("Login successful!");
+                } else {
+                    alert("Login failed. Invalid password!");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+            // 防止表單提交刷新頁面
+            return false;
+        }
+    </script>
+</body>
+</html>
