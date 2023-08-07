@@ -12,7 +12,6 @@
     <script>
         window.onload = function() {
             showMessage(); // 顯示儲存的訊息
-            console.log(storedMessage);
         };
 
         function showMessage() {
@@ -33,9 +32,10 @@
             console.log(storedMessage);
             client.subscribe(mqttTopic);
             if (storedMessage != "true"){ 
-                // 檢查是否需要輸入密碼
-            //    checkIfPasswordIsRequired();
+                 檢查是否需要輸入密碼
+                checkIfPasswordIsRequired();
             }
+            localStorage.removeItem("message"); // 清除訊息
         }
         function onConnectionLost(responseObject) {
             if (responseObject.errorCode !== 0) {
@@ -56,7 +56,7 @@
             } else {
                 // 導向到密碼錯誤的頁面或做其他處理
                 alert("Incorrect password. Please try again.");
-                checkIfPasswordIsRequired()
+              //  checkIfPasswordIsRequired()
             }
         }
         function checkIfPasswordIsRequired() {
