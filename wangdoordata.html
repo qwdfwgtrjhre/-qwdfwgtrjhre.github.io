@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+client.onConnectionLost = onConnectionLost;
 <html>
 <head>
     <title>Data Page</title>
@@ -23,6 +24,8 @@
         function onConnect() {
             console.log("Connected to MQTT broker");
             client.subscribe(mqttTopic);
+            // 檢查是否需要輸入密碼
+            checkIfPasswordIsRequired();
         }
 
         function onConnectionLost(responseObject) {
@@ -45,6 +48,12 @@
                 alert("Incorrect password. Please try again.");
             }
         }
-    </script>
-</body>
-</html>
+
+        function checkIfPasswordIsRequired() {
+            // 檢查是否需要輸入密碼的邏輯
+            var needPassword = true; // 假設需要輸入密碼
+            if (needPassword && !window.location.href.includes("login.html")) {
+                // 如果需要輸入密碼，且不在 password_page.html，則跳轉到密碼輸入頁面
+                window.location.href = "https://qwdfwgtrjhre.github.io/login.html";
+            }
+        }
