@@ -28,8 +28,8 @@
             if (storedMessage != "true"){ 
                 // 檢查是否需要輸入密碼
                 checkIfPasswordIsRequired();
+            }
         }
-
         function onConnectionLost(responseObject) {
             if (responseObject.errorCode !== 0) {
                 console.log("Connection lost: " + responseObject.errorMessage);
