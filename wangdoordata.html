@@ -12,14 +12,7 @@
         window.onload = function() {
             checkIfPasswordIsRequired();
         };
-        function checkIfPasswordIsRequired() {
-            // 檢查是否需要輸入密碼的邏輯
-            var needPassword = true; // 假設需要輸入密碼
-            if (needPassword && !window.location.href.includes("login.html")) {
-                // 如果需要輸入密碼，且不在 password_page.html，則跳轉到密碼輸入頁面
-                window.location.href = "https://qwdfwgtrjhre.github.io/login.html";
-            }
-        }
+        
         var mqttBroker = "broker.emqx.io";
         var mqttPort = 8084;
         var mqttTopic = "web_input_response";
@@ -46,6 +39,7 @@
 
         function onMessageArrived(message) {
             var payload = message.payloadString;
+            console.log(message.payloadString);
             if (payload === "true") {
                 // 如果已經在 data_page.html，不進行任何操作
                 if (window.location.href.includes("wangdoordata.html")) {
@@ -58,7 +52,14 @@
                 alert("Incorrect password. Please try again.");
             }
         }
-        
+        function checkIfPasswordIsRequired() {
+            // 檢查是否需要輸入密碼的邏輯
+            var needPassword = true; // 假設需要輸入密碼
+            if (needPassword && !window.location.href.includes("login.html")) {
+                // 如果需要輸入密碼，且不在 password_page.html，則跳轉到密碼輸入頁面
+                window.location.href = "https://qwdfwgtrjhre.github.io/login.html";
+            }
+        }
         </script>
     </body>
 
