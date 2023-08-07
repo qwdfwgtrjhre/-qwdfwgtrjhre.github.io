@@ -30,8 +30,8 @@
             client.onMessageArrived = function (message) {
                 if (message.payloadString === "true") {
                     // 將使用者導向到另一個網頁
-                    localStorage.setItem("message", "true");
-                    window.location.href = "https://qwdfwgtrjhre.github.io/wangdoordata.html";
+                    localStorage.setItem("pass", "true");
+                    window.location.href = "https://wangwang.github.io/index.html";
                 } else {
                     // 顯示錯誤消息並停留在原來的網頁
                     var errorMessage = document.getElementById("errorMessage");
