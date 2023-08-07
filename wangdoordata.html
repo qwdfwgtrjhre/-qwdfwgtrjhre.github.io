@@ -10,11 +10,17 @@
     <p>This is the data page content.</p>
 
     <script>
-        var storedMessage = localStorage.getItem("message");
+        window.onload = function() {
+            showMessage(); // 顯示儲存的訊息
+            console.log(storedMessage);
+        };
+
+        function showMessage() {
+            var storedMessage = localStorage.getItem("message");   
+        }
         var mqttBroker = "broker.emqx.io";
         var mqttPort = 8084;
         var mqttTopic = "web_input_response";
-
         client = new Paho.MQTT.Client("wss://" + mqttBroker + ":" + mqttPort + "/mqtt", "web_client");
 
         client.onConnectionLost = onConnectionLost;
