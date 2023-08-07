@@ -33,7 +33,7 @@
             console.log(storedMessage);
             client.subscribe(mqttTopic);
             if (storedMessage !== "true"){ 
-                 檢查是否需要輸入密碼
+                // 檢查是否需要輸入密碼
                 checkIfPasswordIsRequired();
             }
             localStorage.removeItem("message"); // 清除訊息
