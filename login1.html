@@ -17,7 +17,7 @@
     <script>
         function sendMessage() {
             var password = document.getElementById("password").value;
-            var client = new Paho.MQTT.Client("wss://broker.emqx.io/mqtt", "web_client");
+            var client = new Paho.MQTT.Client(mqttBroker, mqttPort,  "client-" + Math.round(Math.random(100000000, 1000000000)*1000000000));
             client.connect({
                 onSuccess: function () {
                     console.log("Connected to MQTT broker");
