@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Page</title>
+</head>
+<body>
+    <h1>Welcome to Data Page</h1>
+    <p>This is the data page content.</p>
+
+    <script>
+        var mqttBroker = "broker.emqx.io";
+        var mqttPort = 1883;
+        var mqttTopic = "web_input_response";
+
+        var client = new Paho.MQTT.Client(mqttBroker, mqttPort, "client-" + Math.round(Math.random() * 1000000));
+
+        client.onConnectionLost = onConnectionLost;
+        client.onMessageArrived = onMessageArrived;
+
+        client.connect({ onSuccess: onConnect });
+
+        function onConnect() {
+            console.log("Connected to MQTT broker");
+            client.subscribe(mqttTopic);
+        }
+
+        function onConnectionLost(responseObject) {
+            if (responseObject.errorCode !== 0) {
+                console.log("Connection lost: " + responseObject.errorMessage);
+            }
+        }
+
+        function onMessageArrived(message) {
+            var payload = message.payloadString;
+            if (payload === "true") {
+                // 導向到允許進入的頁面
+                window.location.href = "https://qwdfwgtrjhre.github.io/data_page.html";
+            } else {
+                // 導向到密碼錯誤的頁面或做其他處理
+                alert("Incorrect password. Please try again.");
+            }
+        }
+    </script>
+</body>
+</html>
