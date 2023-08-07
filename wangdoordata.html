@@ -24,10 +24,11 @@
 
         function onConnect() {
             console.log("Connected to MQTT broker");
+            console.log(storedMessage);
             client.subscribe(mqttTopic);
             if (storedMessage != "true"){ 
                 // 檢查是否需要輸入密碼
-                checkIfPasswordIsRequired();
+            //    checkIfPasswordIsRequired();
             }
         }
         function onConnectionLost(responseObject) {
