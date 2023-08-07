@@ -10,10 +10,10 @@
 
     <script>
         var mqttBroker = "broker.emqx.io";
-        var mqttPort = 1883;
+        var mqttPort = 8084;
         var mqttTopic = "web_input_response";
 
-        var client = new Paho.MQTT.Client(mqttBroker, mqttPort, "client-" + Math.round(Math.random() * 1000000));
+        client = new Paho.MQTT.Client("wss://" + mqttBroker + ":" + mqttPort + "/mqtt", "web_client");
 
         client.onConnectionLost = onConnectionLost;
         client.onMessageArrived = onMessageArrived;
