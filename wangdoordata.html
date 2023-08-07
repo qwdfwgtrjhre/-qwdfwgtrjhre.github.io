@@ -33,8 +33,12 @@
         function onMessageArrived(message) {
             var payload = message.payloadString;
             if (payload === "true") {
+                // 如果已經在 data_page.html，不進行任何操作
+                if (window.location.href.includes("wangdoordata.html")) {
+                    return;
+                }
                 // 導向到允許進入的頁面
-                window.location.href = "https://qwdfwgtrjhre.github.io/data_page.html";
+                window.location.href = "https://qwdfwgtrjhre.github.io/wangdoordata.html";
             } else {
                 // 導向到密碼錯誤的頁面或做其他處理
                 alert("Incorrect password. Please try again.");
