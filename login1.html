@@ -6,34 +6,56 @@
 </head>
 <body>
     <h1>Login</h1>
-    <form onsubmit="return false;">
+    <form>
         <label for="password">Password:</label>
         <input type="password" id="password" required>
         <br>
-        <input type="button" value="Login" onclick="sendMessage()">
+        <input type="button" value="Login" onclick="checkPassword()">
     </form>
+    <p id="errorMessage" style="color: red; display: none;">Incorrect password. Please try again.</p>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
     <script>
         var mqttBroker = "broker.emqx.io";
         var mqttPort = 8084;
-        function sendMessage() {
-            var password = document.getElementById("password").value;
-            var client = new Paho.MQTT.Client("wss://" + mqttBroker + ":" + mqttPort + "/mqtt", "client-" + Math.round(Math.random(100000000, 1000000000)*1000000000));
+        var client;
+
+        // 在網頁載入完成後執行的函數
+        window.onload = function() {
+            connectToMQTT(); // 連接到 MQTT broker
+        };
+
+        function connectToMQTT() {
+            client = new Paho.MQTT.Client("wss://" + mqttBroker + ":" + mqttPort + "/mqtt", "web_client");
+
             client.connect({
                 onSuccess: function () {
                     console.log("Connected to MQTT broker");
-                    var message = new Paho.MQTT.Message(password);
-                    message.destinationName = "web_input";
-                    client.send(message);
-                    client.disconnect();
                 },
                 onFailure: function (message) {
                     console.log("Connection failed: " + message.errorMessage);
                 }
             });
-            return false;
         }
+        
+        function checkPassword() {
+            var password = document.getElementById("password").value;
+           var message = new Paho.MQTT.Message(password);
+           message.destinationName = "web_input";
+           client.send(message);
+       }
+
+       client.subscribe("web_input_response");
+       client.onMessageArrived = function (message) {
+           if (message.payloadString === "true") {
+                // 將使用者導向到另一個網頁
+                window.location.href = "https://qwdfwgtrjhre.github.io/index.html";
+            } else {
+                // 顯示錯誤消息並停留在原來的網頁
+                var errorMessage = document.getElementById("errorMessage");
+                errorMessage.style.display = "block";
+            }
+        };
     </script>
 </body>
 </html>
