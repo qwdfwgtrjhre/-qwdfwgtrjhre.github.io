@@ -28,18 +28,33 @@
     <div id="topic1-data"></div>
     <div id="topic2-data"></div>
     <script>
-	    var countdownInterval;
-		var data1;
+	var countdownInterval;
+        var data1;
         var countdownTime = 5; // 倒计时时间，单位：秒
         var mqttBroker = "broker.emqx.io";
         var mqttPort = 8083;
         var mqttTopic = "WangWangPi/MqttButton";  //傳送訊息
-		var mqttTopic1 = "WangWangPi/Code";  //接收輸入密碼後回傳的true or false
+	var mqttTopic1 = "WangWangPi/Code";  //接收輸入密碼後回傳的true or false
         var mqttTopic2 = "WangWangPi/Data";  //接收資料
         // 创建 MQTT 客户端实例
         var client = new Paho.MQTT.Client(mqttBroker, mqttPort,  "client-" + Math.round(Math.random(100000000, 1000000000)*1000000000));
-        //"clientId"
+
+	
+	window.onload = function() {
+            checkIfPasswordIsRequired();
+        };
+
+        function checkIfPasswordIsRequired() {
+            // 在這裡添加需要的檢查邏輯
+            var needPassword = true; // 假設需要輸入密碼
+            if (needPassword) {
+                // 如果需要輸入密碼，則跳轉到密碼輸入頁面
+                window.location.href = "https://qwdfwgtrjhre.github.io/login.html";
+            }
+        }
+	//"clientId"
         // 设置连接和消息接收的回调函数
+	
         client.onConnectionLost = onConnectionLost;
         client.onMessageArrived = onMessageArrived;
 
