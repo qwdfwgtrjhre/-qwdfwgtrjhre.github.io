@@ -14,7 +14,7 @@
                 <th style="border: 1px solid;"> 許可 </th>
 		<th style="border: 1px solid;"> 照片 </th>
                 <div id="message"></div>
-                <input type="text" id="input-message">
+		<input type="text" id="input-message">
                 <button id="sendButton" onclick="startCountdownAndSend()">輸入密碼開門</button>
 		<span id="countdown"></span>
 		<span id="msg1"></span>
@@ -75,7 +75,7 @@
 	function onMessageArrived(message) {
 	    var topic = message.destinationName;
             var payload = message.payloadString;
-	    if (topic === mqttTopic1) {
+	   /* if (topic === mqttTopic1) {
 	        var data = message.payloadString;
 		data1 = data;
 		var countdownElement = document.getElementById("countdown");
@@ -99,27 +99,27 @@
                 }
 		else if(data1 == "False") 
 		    msg1Element.innerText = "輸入錯誤";
-		}
-		if (topic === mqttTopic2) {
-		    var data = JSON.parse(message.payloadString); //message.payloadString
-                    var id = data.id;
-                    var access = data.access;
-                    var photoData = data.photo;			   
-                    // 添加数据到表格
-                    var table = document.getElementById("data-table")
-                    var newRow = table.insertRow();
-        	    var timeCell = newRow.insertCell(0);
-                    var idCell = newRow.insertCell(1);
-                    var accessCell = newRow.insertCell(2);
-		    var photoCell = newRow.insertCell(3);
-	            timeCell.style.border = '1px solid';
-	            idCell.style.border = '1px solid';
-		    accessCell.style.border = '1px solid';
-	            timeCell.innerHTML = data.currentTime;
-                    idCell.innerText = id;
-                    accessCell.innerText = access;
-	            photoCell.innerHTML = '<img src="data:image/jpeg;base64,' + photoData + '" width="100" height="100">'; // 在单元格中显示照片
-		}
+		}*/
+	    if (topic === mqttTopic2) {
+	        var data = JSON.parse(message.payloadString); //message.payloadString
+                var id = data.id;
+                var access = data.access;
+                var photoData = data.photo;			   
+                // 添加数据到表格
+                var table = document.getElementById("data-table")
+                var newRow = table.insertRow();
+        	var timeCell = newRow.insertCell(0);
+                var idCell = newRow.insertCell(1);
+                var accessCell = newRow.insertCell(2);
+		var photoCell = newRow.insertCell(3);
+	        timeCell.style.border = '1px solid';
+	        idCell.style.border = '1px solid';
+		accessCell.style.border = '1px solid';
+	        timeCell.innerHTML = data.currentTime;
+                idCell.innerText = id;
+                accessCell.innerText = access;
+	        photoCell.innerHTML = '<img src="data:image/jpeg;base64,' + photoData + '" width="100" height="100">'; // 在单元格中显示照片
+	    }
 	}
         function startCountdownAndSend() {
 	    var countdownElement = document.getElementById("countdown");
@@ -133,10 +133,11 @@
 	}
 		
         function sendDataToMqtt() {
-	    var message = document.getElementById("input-message").value;
+	    var valueToSend = "opendoor";  // 替換為你想要傳送的值
+	    //var message = document.getElementById("input-message").value;
 	    if (client.isConnected()) {
-                // 发布消息到另一个主题
-                var mqttMessage = new Paho.MQTT.Message(message);
+		var mqttMessage = new Paho.MQTT.Message(valueToSend);    
+                //var mqttMessage = new Paho.MQTT.Message(message);
                 mqttMessage.destinationName = mqttTopic;
                 client.send(mqttMessage);
 	    }
