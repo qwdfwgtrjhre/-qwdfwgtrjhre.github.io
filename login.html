@@ -42,7 +42,7 @@
             client.connect({
                 onSuccess: function () {
                     console.log("Connected to MQTT broker");
-                    client.subscribe("web_input_response"); // 訂閱回應主題
+                    client.subscribe("WangWangPi/Code"); // 訂閱回應主題
                 },
                 onFailure: function (message) {
                     console.log("Connection failed: " + message.errorMessage);
@@ -53,7 +53,7 @@
         function checkPassword() {
             var password = document.getElementById("password").value;
             var message = new Paho.MQTT.Message(password);
-            message.destinationName = "web_input";
+            message.destinationName = "WangWangPi/login";
             client.send(message);
         }
     </script>
