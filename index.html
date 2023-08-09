@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dynamic Website</title>
+    <title>WebSocket Example</title>
 </head>
 <body>
-    <h1>Data from Internal API:</h1>
-    <ul id="data-list"></ul>
+    <h1>WebSocket Example</h1>
+
+    <div id="messages"></div>
 
     <script>
-        function handleApiResponse(data) {
-            const dataList = document.getElementById('data-list');
-            data.forEach(item => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `ID: ${item.id}, Name: ${item.name}`;
-                dataList.appendChild(listItem);
-            });
-        }
+        const socket = new WebSocket("ws://192.168.0.3:8080");  // WebSocket 伺服器的地址
 
-        // Create a script element to make the JSONP request
-        const script = document.createElement('script');
-        script.src = 'http://192.168.0.3/api/data?callback=handleApiResponse';
-        document.body.appendChild(script);
+        socket.onopen = event => {
+            console.log("WebSocket connection opened.");
+        };
+
+        socket.onmessage = event => {
+            const message = event.data;
+            console.log("Received message:", message);
+
+            // 將接收到的訊息顯示在頁面上
+            const messagesDiv = document.getElementById("messages");
+            const messageDiv = document.createElement("div");
+            messageDiv.textContent = message;
+            messagesDiv.appendChild(messageDiv);
+        };
+
+        socket.onclose = event => {
+            console.log("WebSocket connection closed.");
+        };
     </script>
 </body>
 </html>
