@@ -76,7 +76,7 @@
 	function onMessageArrived(message) {
 	    var topic = message.destinationName;
             var payload = message.payloadString;
-	   /* if (topic === mqttTopic1) {
+	    if (topic === mqttTopic1) {
 	        var data = message.payloadString;
 		data1 = data;
 		var countdownElement = document.getElementById("countdown");
@@ -100,7 +100,7 @@
                 }
 		else if(data1 == "False") 
 		    msg1Element.innerText = "輸入錯誤";
-		}*/
+		}
 	    if (topic === mqttTopic2) {
 	        var data = JSON.parse(message.payloadString); //message.payloadString
                 var id = data.id;
