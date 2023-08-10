@@ -142,6 +142,8 @@
                 updateTable(); // 更新表格显示*/
             }
 		var data = JSON.parse(message.payloadString);
+		console.log(data.Time);
+		console.log(data.UID);
                 if (dataBuffer.length >= 20) {
                     dataBuffer.shift(); // 移除最早的一筆資料
                 }
@@ -176,8 +178,8 @@
             var tableBody = document.getElementById("data-table");
             tableBody.innerHTML = ""; // 清空原有資料
             dataBuffer.forEach(function(data) {
-		console.log(data.Time);
-		console.log(data.UID);
+		console.log(dataBuffer.Time);
+		console.log(dataBuffer.UID);
                 var newRow = tableBody.insertRow();
                 var timeCell = newRow.insertCell(0);
                 var idCell = newRow.insertCell(1);
