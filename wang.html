@@ -175,30 +175,34 @@
 	}
 
 	function updateTable() {
-            var tableBody = document.getElementById("data-table");
-            tableBody.innerHTML = ""; // 清空原有資料
-            dataBuffer.forEach(function(data) {
-                var newRow = tableBody.insertRow();
-                var timeCell = newRow.insertCell(0);
-                var idCell = newRow.insertCell(1);
-                var accessCell = newRow.insertCell(2);
-                var photoCell = newRow.insertCell(3);
+    var tableBody = document.getElementById("data-table");
+    tableBody.innerHTML = ""; // 清空原有資料
 
-                timeCell.style.border = '1px solid';
-                idCell.style.border = '1px solid';
-                accessCell.style.border = '1px solid';
-                timeCell.innerHTML = data.currentTime;
-                idCell.innerText = data.id;
-                accessCell.innerText = data.access;
-        
-                // 將照片 URL 放入 img 標籤中
-                var photoImg = document.createElement("img");
-                photoImg.src = data.image_url;
-                photoImg.width = 100;
-                photoImg.height = 100;
-                photoCell.appendChild(photoImg);
-            });
-        }
+    dataBuffer.forEach(function(data) {
+        var newRow = tableBody.insertRow();
+        var timeCell = newRow.insertCell(0);
+        var idCell = newRow.insertCell(1);
+        var accessCell = newRow.insertCell(2);
+        var photoCell = newRow.insertCell(3);
+
+        timeCell.style.border = '1px solid';
+        idCell.style.border = '1px solid';
+        accessCell.style.border = '1px solid';
+
+        // 使用小写属性名提取对应的值
+        timeCell.innerHTML = data.currenttime;
+        idCell.innerText = data.id;
+        accessCell.innerText = data.access;
+
+        // 将照片 URL 放入 img 标签中
+        var photoImg = document.createElement("img");
+        photoImg.src = data.image_url;
+        photoImg.width = 100;
+        photoImg.height = 100;
+        photoCell.appendChild(photoImg);
+    });
+}
+
 
         function startCountdownAndSend() {
 	    var countdownElement = document.getElementById("countdown");
