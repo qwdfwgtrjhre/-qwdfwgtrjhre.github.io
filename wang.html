@@ -82,26 +82,26 @@
 		var countdownElement = document.getElementById("countdown");
 		var msg1Element = document.getElementById("msg1");
                 var sendButton = document.getElementById("sendButton");
-		//if (data1 == "True") {   
-		sendButton.disabled = true; // 禁用发送按钮
-		msg1Element.innerText = "已開門";
-                var countdownInterval = setInterval(function() {
-                    countdownElement.innerText = countdownTime;
-                    countdownTime--;
-		    if (countdownTime < 0) { 
-                        clearInterval(countdownInterval);
-                        countdownElement.innerText = "";
-                        countdownTime = 5; // 重置倒计时时间
-                        countdownInterval = null;
-			data1 = null;
-                        sendButton.disabled = false; // 启用发送按钮
-		    }
-		}, 1000);
-		msg1Element.innerText = "";
-                //}
+		if (data1 == "True") {   
+		    sendButton.disabled = true; // 禁用发送按钮
+		    msg1Element.innerText = "已開門";
+                    var countdownInterval = setInterval(function() {
+                        countdownElement.innerText = countdownTime;
+                        countdownTime--;
+		        if (countdownTime < 0) { 
+                            clearInterval(countdownInterval);
+                            countdownElement.innerText = "";
+                            countdownTime = 5; // 重置倒计时时间
+                            countdownInterval = null;
+			    data1 = null;
+                            sendButton.disabled = false; // 启用发送按钮
+		        }
+		    }, 1000);
+		    msg1Element.innerText = "";
+                }
 		//else if(data1 == "False") 
 		  //  msg1Element.innerText = "輸入錯誤";
-		}
+	    }
 	    if (topic === mqttTopic2) {
 	        var data = JSON.parse(message.payloadString); //message.payloadString
                 var id = data.id;
