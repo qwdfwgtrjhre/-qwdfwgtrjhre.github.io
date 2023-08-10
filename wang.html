@@ -131,8 +131,17 @@
 		  //  msg1Element.innerText = "輸入錯誤";
 	    }
 	    if (topic === mqttTopic2) {
-
                 try {
+                    var dataArray = JSON.parse(payload);
+
+                    if (Array.isArray(dataArray) && dataArray.length > 0) {
+                        var parsedData = dataArray[0];
+                        handleReceivedData(parsedData); // 调用处理函数
+                    }
+               } catch (error) {
+                     console.log("Error parsing payload:", error);
+	    }     
+                /*try {
                     var dataArray = JSON.parse(payload); // 解析整个数组
 
                     // 如果 dataArray 是数组且不为空，那么就取第一个元素
@@ -152,7 +161,7 @@
                     }
                 } catch (error) {
                     console.log("Error parsing payload:", error);
-                }
+                
 		//var data = JSON.parse(message.payloadString);
 		
 		console.log(JSON.parse(message.payloadString)[0]);  // 输出结果是解析后的 JSON 对象
@@ -160,7 +169,7 @@
                     dataBuffer.shift(); // 移除最早的一筆資料
                 }
                 dataBuffer.push(data);
-                updateTable();  
+                updateTable(); */ 
 
 		    
 	        //var data = JSON.parse(message.payloadString); //message.payloadString
@@ -185,6 +194,34 @@
 	        //photoCell.innerHTML = '<img src="data:image/jpeg;base64,' + photoData + '" width="100" height="100">'; // 在单元格中显示照片*/
 	   // }
 	}
+    function handleReceivedData(parsedData) {
+    // 在这里使用解析后的数据进行更新表格的操作
+    var tableBody = document.getElementById("data-table");
+
+    parsedData.forEach(function(data) {
+        var newRow = tableBody.insertRow();
+        var timeCell = newRow.insertCell(0);
+        var idCell = newRow.insertCell(1);
+        var accessCell = newRow.insertCell(2);
+        var photoCell = newRow.insertCell(3);
+
+        timeCell.style.border = '1px solid';
+        idCell.style.border = '1px solid';
+        accessCell.style.border = '1px solid';
+
+        // 使用小写属性名提取对应的值
+        timeCell.innerHTML = data.currentTime;
+        idCell.innerText = data.id;
+        accessCell.innerText = data.access;
+
+        // 将照片 URL 放入 img 标签中
+        var photoImg = document.createElement("img");
+        photoImg.src = data.image_url;
+        photoImg.width = 100;
+        photoImg.height = 100;
+        photoCell.appendChild(photoImg);
+    });
+}
 
 	function updateTable() {
     var tableBody = document.getElementById("data-table");
