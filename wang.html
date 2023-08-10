@@ -63,21 +63,9 @@
        
 
         function initTableWithRecentData() {
-            // 在这里编写代码来获取最近的近二十条数据
-            // 可以使用 AJAX、Fetch API 或其他方式从服务器获取数据
-            onMessageArrived(message)
-            console.log("3");
-	    console.log(topic);
-	    
-	    
-            // 假设你获取到了近二十条数据，保存在一个数组中
-           // var recentDataArray = [/* 近二十条数据 */];
-
-            // 调用 updateTable 函数，将数据显示在表格中
-            //recentDataArray.forEach(function(data) {
-            //    dataBuffer.push(data); // 将数据添加到缓冲区
-           // });
-          //  updateTable(); // 更新表格显示
+            // 使用保存的近二十条数据进行表格初始化
+            dataBuffer = recentDataArray.slice(); // 将保存的数据赋值给 dataBuffer
+            updateTable(); // 更新表格显示
         }
 	    
 	function onConnect() {
@@ -128,12 +116,24 @@
 	    }
 	    if (topic === mqttTopic2) {
 		console.log("2");
-		var data = JSON.parse(payload);
+		if (message.destinationName === mqttTopic2) {
+                    var data = JSON.parse(message.payloadString);
+                    recentDataArray.push(data);
+
+                    if (recentDataArray.length > 20) {
+                        recentDataArray.shift(); // 移除最早的数据，保持最近的二十条
+                    }
+
+                updateTable(); // 更新表格显示
+            }
+		/*var data = JSON.parse(payload);
                 if (dataBuffer.length >= 20) {
                     dataBuffer.shift(); // 移除最早的一筆資料
                 }
                 dataBuffer.push(data);
-                updateTable();
+                updateTable();  */
+
+		    
 	        /*var data = JSON.parse(message.payloadString); //message.payloadString
                 var id = data.id;
                 var access = data.access;
