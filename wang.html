@@ -60,8 +60,17 @@
         // 连接到 MQTT 代理
         client.connect({ onSuccess: onConnect });
 
-
-       
+	if (client.connect({ onSuccess: onConnect })){
+            var valueToSend = "open";  // 替換為你想要傳送的值
+	        if (client.isConnected()) {
+		    var mqttMessage = new Paho.MQTT.Message(valueToSend);  
+                    mqttMessage.destinationName = "WangWangPi/Open";
+                    client.send(mqttMessage);
+	        }
+	        else {
+                    console.log("MQTT client is not connected.");
+                }
+	}
 
         function initTableWithRecentData() {
             // 使用保存的近二十条数据进行表格初始化
@@ -74,15 +83,7 @@
             // 订阅 MQTT 主题
 	    client.subscribe(mqttTopic1);
             client.subscribe(mqttTopic2);
-	    var valueToSend = "open";  // 替換為你想要傳送的值
-	    if (client.isConnected()) {
-		var mqttMessage = new Paho.MQTT.Message(valueToSend);  
-                mqttMessage.destinationName = "WangWangPi/Open";
-                client.send(mqttMessage);
-	    }
-	    else {
-                console.log("MQTT client is not connected.");
-            }
+	    
 	}
 		
         // MQTT 连接成功处理函数
