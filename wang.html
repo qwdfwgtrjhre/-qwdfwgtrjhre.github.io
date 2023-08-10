@@ -36,7 +36,7 @@
             checkIfPasswordIsRequired();
         }
         localStorage.removeItem("pass"); // 清除訊息
-	    
+	var alreadySentOpen = false;  // 在函式外部定義並初始化變數    
 	var dataBuffer = []; // 在全局范围内声明 dataBuffer 变量
 	var countdownInterval;
         var data1;
