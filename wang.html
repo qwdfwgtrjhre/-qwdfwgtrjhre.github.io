@@ -81,6 +81,7 @@
             // 订阅 MQTT 主题
 	    client.subscribe(mqttTopic1);
             client.subscribe(mqttTopic2);
+	    initTableWithRecentData()
 	}
 		
         // MQTT 连接成功处理函数
@@ -206,12 +207,7 @@
                 window.location.href = "https://wangwangdoor.github.io/login.html";
             }
         }
-	window.onload = function() {
-	    console.log("123");
-            // 执行初始化操作，包括获取最近的近二十条数据并显示在表格中
-            initTableWithRecentData();
-        };
-    </script>
-</body>
 
+        </script>
+    </body>
 </html>
