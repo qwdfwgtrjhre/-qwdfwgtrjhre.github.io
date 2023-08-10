@@ -103,7 +103,13 @@
 		  //  msg1Element.innerText = "輸入錯誤";
 	    }
 	    if (topic === mqttTopic2) {
-	        var data = JSON.parse(message.payloadString); //message.payloadString
+		var data = JSON.parse(payload);
+                if (dataBuffer.length >= 20) {
+                    dataBuffer.shift(); // 移除最早的一筆資料
+                }
+                dataBuffer.push(data);
+                updateTable();
+	        /*var data = JSON.parse(message.payloadString); //message.payloadString
                 var id = data.id;
                 var access = data.access;
                 var photoData = data.photo;			   
@@ -120,9 +126,36 @@
 	        timeCell.innerHTML = data.currentTime;
                 idCell.innerText = id;
                 accessCell.innerText = access;
-	        photoCell.innerHTML = '<img src="data:image/jpeg;base64,' + photoData + '" width="100" height="100">'; // 在单元格中显示照片
+	        photoCell.innerHTML = '<img src="data:image/jpeg;base64,' + photoData + '" width="100" height="100">'; // 在单元格中显示照片*/
 	    }
 	}
+
+	function updateTable() {
+    var tableBody = document.getElementById("table-body");
+    tableBody.innerHTML = ""; // 清空原有資料
+    dataBuffer.forEach(function(data) {
+        var newRow = tableBody.insertRow();
+        var timeCell = newRow.insertCell(0);
+        var idCell = newRow.insertCell(1);
+        var accessCell = newRow.insertCell(2);
+        var photoCell = newRow.insertCell(3);
+
+        timeCell.style.border = '1px solid';
+        idCell.style.border = '1px solid';
+        accessCell.style.border = '1px solid';
+        timeCell.innerHTML = data.currentTime;
+        idCell.innerText = data.id;
+        accessCell.innerText = data.access;
+        
+        // 將照片 URL 放入 img 標籤中
+        var photoImg = document.createElement("img");
+        photoImg.src = data.image_url;
+        photoImg.width = 100;
+        photoImg.height = 100;
+        photoCell.appendChild(photoImg);
+    });
+}
+
         function startCountdownAndSend() {
 	    var countdownElement = document.getElementById("countdown");
 	    var msg1Element = document.getElementById("msg1");
