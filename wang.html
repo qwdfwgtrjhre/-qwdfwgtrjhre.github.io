@@ -131,8 +131,8 @@
                     var dataArray = JSON.parse(payload);
 			
                     if (Array.isArray(dataArray) && dataArray.length > 0) {
-                        var parsedData = dataArray[0];
-                        handleReceivedData(parsedData); // 调用处理函数
+                        handleReceivedData(dataArray); // 调用处理函数
+                        
                     }
                 } catch (error) {
                      console.log("Error parsing payload:", error);
@@ -171,7 +171,7 @@
 	}
             function handleReceivedData(parsedData) {
                 // 在这里使用解析后的数据进行更新表格的操作
-                var tableBody = document.getElementById("data-table");
+               // var tableBody = document.getElementById("data-table");
 		    
                 parsedData.forEach(function(data) {
                     var newRow = tableBody.insertRow();
