@@ -125,21 +125,21 @@
 	    }
 	    if (topic === mqttTopic2) {
 		console.log("2");
-                var data = JSON.parse(message.payloadString);
+                /*var data = JSON.parse(message.payloadString);
                 recentDataArray.push(data);
 
                 if (recentDataArray.length > 20) {
                     recentDataArray.shift(); // 移除最早的数据，保持最近的二十条
                 }
 
-                updateTable(); // 更新表格显示
+                updateTable(); // 更新表格显示*/
             }
-		/*var data = JSON.parse(payload);
+		var data = JSON.parse(payload);
                 if (dataBuffer.length >= 20) {
                     dataBuffer.shift(); // 移除最早的一筆資料
                 }
                 dataBuffer.push(data);
-                updateTable();  */
+                updateTable();  
 
 		    
 	        /*var data = JSON.parse(message.payloadString); //message.payloadString
