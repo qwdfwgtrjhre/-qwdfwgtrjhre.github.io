@@ -143,6 +143,17 @@
             }
 		console.log(message.payloadString);
 		var data = JSON.parse(message.payloadString);
+		if (Array.isArray(dataArray) && dataArray.length > 0) {
+                    var data = dataArray[0]; // 取第一个 JSON 对象
+
+                    var id = data.id;
+                    var access = data.access;
+                    var photoData = data.image_url;
+                    var time = data.currentTime; // 请确保属性名正确
+
+                console.log(time); // 此时应该可以正确输出时间
+                console.log(id);   // 此时应该可以正确输出 ID
+
 		console.log(JSON.parse(message.payloadString)[0]);  // 输出结果是解析后的 JSON 对象
                 if (dataBuffer.length >= 20) {
                     dataBuffer.shift(); // 移除最早的一筆資料
