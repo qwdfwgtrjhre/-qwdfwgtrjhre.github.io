@@ -141,7 +141,7 @@
 
                 updateTable(); // 更新表格显示*/
             }
-		var data = JSON.parse(payload.payloadString);
+		var data = JSON.parse(payload);
                 if (dataBuffer.length >= 20) {
                     dataBuffer.shift(); // 移除最早的一筆資料
                 }
