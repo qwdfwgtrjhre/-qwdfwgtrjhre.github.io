@@ -143,8 +143,8 @@
             }
 		console.log(message.payloadString);
 		var data = JSON.parse(message.payloadString);
-		console.log(data.Time);
-		console.log(data.UID);
+		console.log(data.currentTime);
+		console.log(data.id);
                 if (dataBuffer.length >= 20) {
                     dataBuffer.shift(); // 移除最早的一筆資料
                 }
