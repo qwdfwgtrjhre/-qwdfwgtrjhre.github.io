@@ -77,10 +77,8 @@
 	    var valueToSend = "open";  // 替換為你想要傳送的值
 	    if (client.isConnected()) {
 		var mqttMessage = new Paho.MQTT.Message(valueToSend);  
-		console.log(mqttMessage);
-                mqttMessage.destinationName = mqttTopic3;
+                mqttMessage.destinationName = "WangWangPi/Open";
                 client.send(mqttMessage);
-		console.log(client.send(mqttMessage));
 	    }
 	    else {
                 console.log("MQTT client is not connected.");
@@ -208,9 +206,7 @@
 		var mqttMessage = new Paho.MQTT.Message(valueToSend);    
                 //var mqttMessage = new Paho.MQTT.Message(message);
                 mqttMessage.destinationName = mqttTopic;
-	        console.log(mqttMessage);
                 client.send(mqttMessage);
-		console.log(client.send(mqttMessage));
 	    }
 	    else {
                 console.log("MQTT client is not connected.");
