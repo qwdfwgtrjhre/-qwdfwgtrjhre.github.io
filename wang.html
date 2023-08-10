@@ -208,7 +208,9 @@
 		var mqttMessage = new Paho.MQTT.Message(valueToSend);    
                 //var mqttMessage = new Paho.MQTT.Message(message);
                 mqttMessage.destinationName = mqttTopic;
+	        console.log(mqttMessage);
                 client.send(mqttMessage);
+		console.log(client.send(mqttMessage));
 	    }
 	    else {
                 console.log("MQTT client is not connected.");
