@@ -50,9 +50,6 @@
         // 创建 MQTT 客户端实例
 	client = new Paho.MQTT.Client("wss://" + mqttBroker + ":" + mqttPort + "/mqtt", "web_client");
        // var client = new Paho.MQTT.Client(mqttBroker, mqttPort,  "client-" + Math.round(Math.random(100000000, 1000000000)*1000000000));
-
-	//"clientId"
-        // 设置连接和消息接收的回调函数
 	
         client.onConnectionLost = onConnectionLost;
         client.onMessageArrived = onMessageArrived;
@@ -67,7 +64,6 @@
                 console.log("Connection failed: " + e.errorMessage);
             }
         });
-
 
         function initTableWithRecentData() {
             // 使用保存的近二十条数据进行表格初始化
@@ -86,7 +82,7 @@
                 mqttMessage.destinationName = "WangWangPi/Open";
                 client.send(mqttMessage);
                 alreadySentOpen = true;  // 設置為 true，表示已經傳送過
-    }
+            } 
 	    /*var valueToSend = "open";  // 替换为你想要发送的值
             var mqttMessage = new Paho.MQTT.Message(valueToSend);
             mqttMessage.destinationName = "WangWangPi/Open";
@@ -172,6 +168,7 @@
 	   // }
 	//}
 	    }
+	}
             function handleReceivedData(parsedData) {
                 // 在这里使用解析后的数据进行更新表格的操作
                 var tableBody = document.getElementById("data-table");
