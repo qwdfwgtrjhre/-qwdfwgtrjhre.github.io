@@ -46,6 +46,7 @@
         var mqttTopic = "WangWangPi/MqttButton";  //傳送訊息
 	var mqttTopic1 = "WangWangPi/Code";  //接收輸入密碼後回傳的true or false
         var mqttTopic2 = "WangWangPi/Data";  //接收資料
+	var mqttTopic3 = "WangWangPi/Open";  //傳送網站已開啟的信號
         // 创建 MQTT 客户端实例
 	client = new Paho.MQTT.Client("wss://" + mqttBroker + ":" + mqttPort + "/mqtt", "web_client");
        // var client = new Paho.MQTT.Client(mqttBroker, mqttPort,  "client-" + Math.round(Math.random(100000000, 1000000000)*1000000000));
@@ -73,7 +74,16 @@
             // 订阅 MQTT 主题
 	    client.subscribe(mqttTopic1);
             client.subscribe(mqttTopic2);
-	   // initTableWithRecentData()
+	    
+	    var valueToSend = "open";  // 替換為你想要傳送的值
+	    if (client.isConnected()) {
+		var mqttMessage = new Paho.MQTT.Message(valueToSend);    
+                mqttMessage.destinationName = mqttTopic3;
+                client.send(mqttMessage);
+	    }
+	    else {
+                console.log("MQTT client is not connected.");
+            }
 	}
 		
         // MQTT 连接成功处理函数
