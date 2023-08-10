@@ -36,7 +36,7 @@
             checkIfPasswordIsRequired();
         }
         localStorage.removeItem("pass"); // 清除訊息
-
+	    
 	var dataBuffer = []; // 在全局范围内声明 dataBuffer 变量
 	var countdownInterval;
         var data1;
@@ -58,7 +58,24 @@
 
         // 连接到 MQTT 代理
         client.connect({ onSuccess: onConnect });
-		
+
+
+       
+
+        function initTableWithRecentData() {
+            // 在这里编写代码来获取最近的近二十条数据
+            // 可以使用 AJAX、Fetch API 或其他方式从服务器获取数据
+
+            // 假设你获取到了近二十条数据，保存在一个数组中
+            var recentDataArray = [/* 近二十条数据 */];
+
+            // 调用 updateTable 函数，将数据显示在表格中
+            recentDataArray.forEach(function(data) {
+                dataBuffer.push(data); // 将数据添加到缓冲区
+            });
+            updateTable(); // 更新表格显示
+        }
+	    
 	function onConnect() {
             console.log("Connected to MQTT broker");
             // 订阅 MQTT 主题
@@ -189,6 +206,10 @@
                 window.location.href = "https://wangwangdoor.github.io/login.html";
             }
         }
+	window.onload = function() {
+            // 执行初始化操作，包括获取最近的近二十条数据并显示在表格中
+            initTableWithRecentData();
+        };
     </script>
 </body>
 
