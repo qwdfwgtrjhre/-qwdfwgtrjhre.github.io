@@ -74,7 +74,6 @@
 	    client.subscribe(mqttTopic1);
             client.subscribe(mqttTopic2);
 	    initTableWithRecentData()
-	    console.log("1");
 	}
 		
         // MQTT 连接成功处理函数
@@ -116,13 +115,12 @@
 	    }
 	    if (topic === mqttTopic2) {
 		console.log("2");
-		if (message.destinationName === mqttTopic2) {
-                    var data = JSON.parse(message.payloadString);
-                    recentDataArray.push(data);
+                var data = JSON.parse(message.payloadString);
+                recentDataArray.push(data);
 
-                    if (recentDataArray.length > 20) {
-                        recentDataArray.shift(); // 移除最早的数据，保持最近的二十条
-                    }
+                if (recentDataArray.length > 20) {
+                    recentDataArray.shift(); // 移除最早的数据，保持最近的二十条
+                }
 
                 updateTable(); // 更新表格显示
             }
