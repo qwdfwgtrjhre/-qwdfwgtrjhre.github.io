@@ -82,6 +82,7 @@
 	    client.subscribe(mqttTopic1);
             client.subscribe(mqttTopic2);
 	    initTableWithRecentData()
+	    console.log("1");
 	}
 		
         // MQTT 连接成功处理函数
@@ -122,6 +123,7 @@
 		  //  msg1Element.innerText = "輸入錯誤";
 	    }
 	    if (topic === mqttTopic2) {
+		console.log("2");
 		var data = JSON.parse(payload);
                 if (dataBuffer.length >= 20) {
                     dataBuffer.shift(); // 移除最早的一筆資料
