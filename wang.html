@@ -80,10 +80,17 @@
             // 订阅 MQTT 主题
 	    client.subscribe(mqttTopic1);
             client.subscribe(mqttTopic2);
-	    var valueToSend = "open";  // 替换为你想要发送的值
+	    if (!alreadySentOpen) {  // 使用一個變數來記錄是否已經傳送過訊息
+                var valueToSend = "open";  
+                var mqttMessage = new Paho.MQTT.Message(valueToSend);
+                mqttMessage.destinationName = "WangWangPi/Open";
+                client.send(mqttMessage);
+                alreadySentOpen = true;  // 設置為 true，表示已經傳送過
+    }
+	    /*var valueToSend = "open";  // 替换为你想要发送的值
             var mqttMessage = new Paho.MQTT.Message(valueToSend);
             mqttMessage.destinationName = "WangWangPi/Open";
-            client.send(mqttMessage);
+            client.send(mqttMessage);*/
 	}
 		
         // MQTT 连接成功处理函数
