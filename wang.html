@@ -85,6 +85,7 @@
                 var mqttMessage = new Paho.MQTT.Message(valueToSend);
                 mqttMessage.destinationName = "WangWangPi/Open";
                 client.send(mqttMessage);
+		console.log("1");
                 alreadySentOpen = true;  // 設置為 true，表示已經傳送過
     }
 	    /*var valueToSend = "open";  // 替换为你想要发送的值
