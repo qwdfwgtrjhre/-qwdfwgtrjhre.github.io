@@ -143,9 +143,7 @@
             }
 		console.log(message.payloadString);
 		var data = JSON.parse(message.payloadString);
-		console.log(data);
-		console.log(data.currentTime);
-		console.log(data.id);
+		console.log(JSON.parse(message.payloadString)[0]);  // 输出结果是解析后的 JSON 对象
                 if (dataBuffer.length >= 20) {
                     dataBuffer.shift(); // 移除最早的一筆資料
                 }
@@ -180,8 +178,6 @@
             var tableBody = document.getElementById("data-table");
             tableBody.innerHTML = ""; // 清空原有資料
             dataBuffer.forEach(function(data) {
-		console.log(dataBuffer.Time);
-		console.log(dataBuffer.UID);
                 var newRow = tableBody.insertRow();
                 var timeCell = newRow.insertCell(0);
                 var idCell = newRow.insertCell(1);
