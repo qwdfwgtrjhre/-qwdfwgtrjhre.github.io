@@ -10,40 +10,27 @@
             font-family: Arial, sans-serif;
             color: white;
             position: relative;
+            background: url("https://wangwangdoor.github.io/image/login_Img.jpg") no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
         }
-        .background-container {
-            width: 100vw;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-        .background-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        /* Add your existing CSS styles here */
-
-        /* Add this part for the overlay effect */
         .background-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9); /* Adjust the color and opacity here */
+            background-color: rgba(0, 0, 0, 0.3); /* Adjust the color and opacity here */
             z-index: -1;
         }
+        /* Add your existing CSS styles here */
     </style>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🈲</text></svg>"></link>
 </head>
 <body>
-    <div class="background-container">
-        <img class="background-image" src="https://wangwangdoor.github.io/image/login_Img.jpg" alt="Background Image">
-        <div class="background-overlay"></div> <!-- Add the overlay div -->
-    </div>
+    <div class="background-overlay"></div> <!-- Add the overlay div -->
     <h1>Login</h1>
     <form>
         <label for="password">Password:</label>
