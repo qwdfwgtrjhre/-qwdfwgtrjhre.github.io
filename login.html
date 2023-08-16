@@ -7,24 +7,44 @@
         body {
             margin: 0;
             padding: 0;
-            position: relative; /* 让 ::before 伪元素相对于 body 定位 */
+            font-family: Arial, sans-serif;
+            color: white;
+            filter: brightness(0.5)
+            position: relative; /* Add this to establish a positioning context */
         }
+        .background-container {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .background-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Add your existing CSS styles here */
 
-        body::before {
+        /* Add this part for the overlay effect */
+        .background-container::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url("https://wangwangdoor.github.io/image/login_Img.jpg") center/cover no-repeat;
-            filter: brightness(0.3); /* 调整亮度值以控制淡化程度 */
-            z-index: -1; /* 将 ::before 放在底层，避免遮挡内容 */
+            background-color: rgba(0, 0, 0, 0.3); /* Adjust the color and opacity here */
+            z-index: -1;
         }
     </style>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🈲</text></svg>"></link>
 </head>
 <body>
+    <div class="background-container">
+        <img class="background-image" src="https://wangwangdoor.github.io/image/login_Img.jpg" alt="Background Image">
+    </div>
     <h1>Login</h1>
     <form>
         <label for="password">Password:</label>
