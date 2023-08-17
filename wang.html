@@ -123,19 +123,29 @@
                 try {
                     var dataArray = JSON.parse(payload);	
                     if (Array.isArray(dataArray) && dataArray.length > 0) {
-                        handleReceivedData(dataArray); // 调用处理函数          
+			dataArray.forEach(function(data) {
+                            dataBuffer.push(data);
+                        });
+
+                        // 在此处调用更新数据表格的函数
+                        updateTable();
+                       // handleReceivedData(dataArray); // 调用处理函数          
                     }
                 } catch (error) {
                      console.log("Error parsing payload:", error);
 	        }     
-		if (dataBuffer.length >= MAX_BUFFER_SIZE) {
+		var maxDataItems = 20;
+                while (dataBuffer.length > maxDataItems) {
+                    dataBuffer.shift(); // 移除最早的一项数据
+                }
+		/*if (dataBuffer.length >= MAX_BUFFER_SIZE) {
                     dataBuffer.pop(); // 移除最后一个元素，确保数组长度不超过限制
                 }
         
                 dataBuffer.unshift(data); // 将新数据插入到数组开头
 
                 // 在此处调用更新表格的函数，重新填充表格
-                updateTable();
+                updateTable();*/
                /* if (dataBuffer.length >= 20) {
                     dataBuffer.shift(); // 移除最早的一筆資料
                 }*/
@@ -174,8 +184,18 @@
 	    function updateTable() {
                 var tableBody = document.getElementById("data-table");
               //  tableBody.innerHTML = ""; // 清空原有数据
-                dataBuffer.forEach(function(data) {
+		tableBody.innerHTML = ""; // 清空原有数据
 
+                // 对 dataBuffer 进行逆序排序
+                dataBuffer.sort(function(a, b) {
+                    return new Date(b.currentTime) - new Date(a.currentTime);
+                });
+
+                // 控制数据项数量，只显示限定数量的最新数据
+                var maxDataItems = 20;
+                var displayData = dataBuffer.slice(0, maxDataItems);
+                //dataBuffer.forEach(function(data) {
+                displayData.forEach(function(data) {
 	            var newRow = tableBody.insertRow();
                     var timeCell = newRow.insertCell(0);
                     var idCell = newRow.insertCell(1);
