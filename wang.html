@@ -128,10 +128,18 @@
                 } catch (error) {
                      console.log("Error parsing payload:", error);
 	        }     
-                if (dataBuffer.length >= 20) {
-                    dataBuffer.shift(); // 移除最早的一筆資料
+		if (dataBuffer.length >= MAX_BUFFER_SIZE) {
+                    dataBuffer.pop(); // 移除最后一个元素，确保数组长度不超过限制
                 }
-                dataBuffer.push(data);
+        
+                dataBuffer.unshift(data); // 将新数据插入到数组开头
+
+                // 在此处调用更新表格的函数，重新填充表格
+                updateTable();
+               /* if (dataBuffer.length >= 20) {
+                    dataBuffer.shift(); // 移除最早的一筆資料
+                }*/
+                //dataBuffer.push(data);
 	    }
 	}
 	    
@@ -165,12 +173,11 @@
 		
 	    function updateTable() {
                 var tableBody = document.getElementById("data-table");
-
+                tableBody.innerHTML = ""; // 清空原有数据
                 dataBuffer.forEach(function(data) {
 	          //  console.log(data.currentTime)
 	         //   console.log(data.id)
-	            //var newRow = tableBody.insertRow();
-                    var newRow = tableBody.insertRow(0);
+	            var newRow = tableBody.insertRow();
                     var timeCell = newRow.insertCell(0);
                     var idCell = newRow.insertCell(1);
                     var accessCell = newRow.insertCell(2);
