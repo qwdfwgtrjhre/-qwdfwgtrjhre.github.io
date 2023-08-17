@@ -165,12 +165,12 @@
 		
 	    function updateTable() {
                 var tableBody = document.getElementById("data-table");
-                //tableBody.innerHTML = ""; // 清空原有資料
 
                 dataBuffer.forEach(function(data) {
-	            console.log(data.currentTime)
-	            console.log(data.id)
-                    var newRow = tableBody.insertRow();
+	          //  console.log(data.currentTime)
+	         //   console.log(data.id)
+	            //var newRow = tableBody.insertRow();
+                    var newRow = tableBody.insertRow(0);
                     var timeCell = newRow.insertCell(0);
                     var idCell = newRow.insertCell(1);
                     var accessCell = newRow.insertCell(2);
@@ -182,7 +182,7 @@
 
                     // 使用小写属性名提取对应的值
                     timeCell.innerHTML = data.currentTime;
-	            console.log(timeCell.innerHTML)
+	         //   console.log(timeCell.innerHTML)
                     idCell.innerText = data.id;
                     accessCell.innerText = data.access;
 
