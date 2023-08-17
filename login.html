@@ -4,47 +4,44 @@
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            color: white;
-            position: relative; /* Add this to establish a positioning context */
-        }
-        .background-container {
-            width: 100vw;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-        .background-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        /* Add your existing CSS styles here */
-
-        /* Add this part for the overlay effect */
-        .background-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://wangwangdoor.github.io/image/login_Img.png'); /* Use your PNG image here */
-            background-size: cover;
-            opacity: 0.3; /* Adjust the opacity as needed */
-            z-index: -1;
-        }
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        color: white;
+        position: relative;
+    }
+    .background-container {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    .background-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.7; /* 調整透明度 */
+    }
+    .background-overlay {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: -1;
+    }
     </style>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🈲</text></svg>"></link>
 </head>
 <body>
     <div class="background-container">
         <img class="background-image" src="https://wangwangdoor.github.io/image/login_Img.png" alt="Background Image">
+        <div class="background-overlay"></div>
     </div>
     <h1>Login</h1>
     <form>
