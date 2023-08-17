@@ -173,11 +173,10 @@
 		
 	    function updateTable() {
                 var tableBody = document.getElementById("data-table");
-                tableBody.innerHTML = ""; // 清空原有数据
+              //  tableBody.innerHTML = ""; // 清空原有数据
                 dataBuffer.forEach(function(data) {
-	          //  console.log(data.currentTime)
-	         //   console.log(data.id)
-	            var newRow = tableBody.insertRow();
+
+	            var newRow = tableBody.insertRow(0);
                     var timeCell = newRow.insertCell(0);
                     var idCell = newRow.insertCell(1);
                     var accessCell = newRow.insertCell(2);
