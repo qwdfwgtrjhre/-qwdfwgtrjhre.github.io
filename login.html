@@ -40,7 +40,7 @@
     <h1>Login</h1>
     <form>
         <label for="password">Password:</label>
-        <input type="password" id="password" required>
+        <input type="password" id="password" required onkeypress="handleKeyPress(event)">
         <input type="button" value="Login" onclick="checkPassword()">
     </form>
     <p id="errorMessage" style="color: red; display: none;">Incorrect password. Please try again.</p>
@@ -81,7 +81,13 @@
                 }
             });
         }
-
+        
+        function handleKeyPress(event) {
+            if (event.keyCode === 13) {  // Check if Enter key is pressed
+                checkPassword();  // Call the function to send the password
+            }
+        }
+        
         function checkPassword() {
             var password = document.getElementById("password").value;
             var message = new Paho.MQTT.Message(password);
